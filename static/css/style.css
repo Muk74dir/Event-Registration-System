@@ -1,0 +1,29 @@
+body{
+    margin-bottom: 0% !important;
+    background-color: rgb(222, 216, 216) !important;
+}
+
+footer{
+    background-color:rgb(29, 32, 32) ;
+}
+
+ul{
+    color: red;
+    font-weight: 700;
+}
+
+
+.form-control{
+    border-radius: 5px;
+}
+.requiredField {
+    color: white;
+    font-weight: 700;
+}
+.form-text{
+    color: white;
+    font-weight: 300;
+}
+.asteriskField{
+    color: red;
+}

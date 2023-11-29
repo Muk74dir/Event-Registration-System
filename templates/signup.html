@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}
+<title>Signup</title>
+{% endblock title %}
+{% block integration %}
+<link rel="stylesheet" href="{% static "css/style.css" %} ">
+{% endblock integration %}
+{% block content %}
+<section class="section-content padding-y">
+  <div class="card mx-auto" style="max-width: 520px; margin-top: 40px">
+    <article class="card-body bg-dark">
+      <header class="mb-4"><h1 class="card-title text-center text-white">Sign up</h1></header>
+      <form method="POST">
+      {% csrf_token %}
+      {{form | crispy}}
+      <div class="text-center mt-3">
+        <button type="submit" class="btn btn-success mt-3">Create Account</button>
+      </div>
+      </form>
+    </article>
+  </div>
+  <p class="text-center mt-4">Already have an account? <a decoration="None" href="  " >Log In</a></p>
+  <br /><br />
+</section>
+{% endblock content %}
+
+{% block script %}
+{% endblock script %}
