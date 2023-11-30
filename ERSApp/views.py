@@ -7,6 +7,10 @@ from django.contrib.auth.models import User
 from .forms import UserCreateFrom, RegistrationForm, EventForm
 from .models import Event, Registration
 
+class BaseLoginRequiredMixin(LoginRequiredMixin):
+    login_url = '/login/'
+
+
 class HomeView(View):
     def get(self, request):
         return render(request, 'base.html')
@@ -30,7 +34,7 @@ class LogOutView(View):
         logout(request)
         return redirect('home')
 
-class EventListView(LoginRequiredMixin, View):
+class EventListView(BaseLoginRequiredMixin, View):
     def get(self, request):
         events = Event.objects.all()
         user_registered_events = Registration.objects.filter(user=request.user)
@@ -41,7 +45,7 @@ class EventListView(LoginRequiredMixin, View):
         return render(request, 'event_list.html', context)
 
     
-class EventDetailView(LoginRequiredMixin, View):
+class EventDetailView(BaseLoginRequiredMixin, View):
     def get(self, request, pk):
         event = Event.objects.get(id=pk)
         user_registration = Registration.objects.filter(user=request.user, event=event).first()
@@ -52,7 +56,7 @@ class EventDetailView(LoginRequiredMixin, View):
         return render(request, 'event_detail.html', context)
 
     
-class RegisterForEvent(LoginRequiredMixin, View):
+class RegisterForEvent(BaseLoginRequiredMixin, View):
     def get(self, request, pk):
         if Registration.objects.filter(user=request.user, event=Event.objects.get(id=pk)).exists():
             return redirect('event_detail', pk=pk)
@@ -63,7 +67,7 @@ class RegisterForEvent(LoginRequiredMixin, View):
         return redirect('event_detail', pk=pk)
 
     
-class UnregisterFromEvent(LoginRequiredMixin, View):
+class UnregisterFromEvent(BaseLoginRequiredMixin, View):
     def get(self, request, pk):
         event = Event.objects.get(id=pk)
         registration = Registration.objects.filter(user=request.user, event=event)
@@ -73,7 +77,7 @@ class UnregisterFromEvent(LoginRequiredMixin, View):
         return redirect('event_detail', pk=pk)
 
 
-class UserDashboardView(LoginRequiredMixin, View):
+class UserDashboardView(BaseLoginRequiredMixin, View):
     def get(self, request):
         user_registered_events = Registration.objects.filter(user=request.user)
         context = {
