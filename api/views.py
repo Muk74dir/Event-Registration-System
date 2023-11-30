@@ -1,9 +1,13 @@
-from rest_framework import generics
+from rest_framework import generics, viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.shortcuts import get_object_or_404
 from ERSApp.models import Event, Registration
 from .serializers import EventSerializer, RegistrationSerializer
+
+class EventViewSet(viewsets.ModelViewSet):
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
 
 class EventList(generics.ListAPIView):
     queryset = Event.objects.all()
