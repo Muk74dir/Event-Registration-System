@@ -25,7 +25,10 @@ class UserRegistration(generics.CreateAPIView):
         event_id = self.kwargs.get('event_id')
         event = get_object_or_404(Event, id=event_id)
         user = self.request.user
-        serializer.save(event=event, user=user)
+        if Registration.objects.filter(user=user, event=event).exists():
+            return Response({'message': 'You have already registered for this event'})
+        else:
+            serializer.save(user=user, event=event)
 
 class UserRegisteredEvents(generics.ListAPIView):
     serializer_class = EventSerializer
