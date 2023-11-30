@@ -25,10 +25,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'ERSApp',
     'crispy_forms',
     'crispy_bootstrap4',
     'bootstrap4',
+    'ERSApp',
+    'api',
 ]
 
 CRISPY_ALLOWED_PACKS = "bootstrap4"

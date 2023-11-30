@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h2>Dashboard</h2>
+        <h3>Registered Events</h3>
+        {% if user_registered_events %}
+            <ul class="list-group">
+                {% for registration in user_registered_events %}
+                    <li class="list-group-item"> 
+                        Title : {{ registration.event.title }} <br>
+                        Date : {{ registration.event.date }} <br>
+                        Time : {{ registration.event.time }} <br>
+                        Location : {{ registration.event.location }} <br>
+
+                        Attendee : {{ registration.user.username }} <br>
+                        Email : {{ registration.user.email }} <br>
+                        {% if user_registered_events %}
+                        <a href="{% url "event_detail" registration.event.id %}" class="btn btn-success">Details</a>
+                        <a href="{% url "unregister" registration.event.id %}" class="btn btn-danger">Unregister</a>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No registered events.</p>
+        {% endif %}
+    </div>
+{% endblock %}
