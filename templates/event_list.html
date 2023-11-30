@@ -2,7 +2,16 @@
 
 {% block content %}
     <div class="container mt-4">
-        <h2>Event List</h2>
+        <div class="container my-3">
+            <h2 class="text-center">Event List</h2>
+            <div class="row justify-content-around">
+                <form class="d-flex col-md-6" method="post">
+                    {% csrf_token %}
+                    <input class="form-control" type="Search" placeholder="Search by Event Title" aria-label="Search" name="search">
+                    <button class="btn btn-dark mx-2" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
         {% for event in events %}
             <div class="card mb-3">
                 <div class="card-body">

@@ -4,7 +4,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
-from .forms import UserCreateFrom, RegistrationForm, EventForm
+from .forms import UserCreateFrom, RegistrationForm, EventForm, TaskSearchForm
 from .models import Event, Registration
 
 class BaseLoginRequiredMixin(LoginRequiredMixin):
@@ -43,6 +43,19 @@ class EventListView(BaseLoginRequiredMixin, View):
             'user_registered_events': user_registered_events,
         }
         return render(request, 'event_list.html', context)
+    
+    def post(self, request):
+        form = TaskSearchForm(request.POST)
+        if form.is_valid():
+            search = form.cleaned_data['search']
+            events = Event.objects.filter(title__icontains=search)
+            user_registered_events = Registration.objects.filter(user=request.user)
+            context = {
+                'events': events,
+                'user_registered_events': user_registered_events,
+            }
+            return render(request, 'event_list.html', context)
+        
 
     
 class EventDetailView(BaseLoginRequiredMixin, View):

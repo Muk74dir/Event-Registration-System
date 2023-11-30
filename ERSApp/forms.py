@@ -19,3 +19,6 @@ class EventForm(forms.ModelForm):
     class Meta:
         model = Event
         fields = '__all__'
+        
+class TaskSearchForm(forms.Form):
+    search = forms.CharField(label='Search', required=False)
